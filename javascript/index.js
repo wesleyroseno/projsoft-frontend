@@ -62,14 +62,43 @@ window.onclick = function (event) {
 
 var coursesLayout = document.getElementById("coursesLayout")
 
-async function fetchCourses() {
-    await fetch(baseurl + "/v1/courses/")
+async function fetchCourses(query) {
+    if (query) {
+        await fetch(baseurl + "/v1/courses/?query="+query)
+            .then(response => response.json())
+            .then(data => loadCourses(data));
+    } else {
+        await fetch(baseurl + "/v1/courses/")
         .then(response => response.json())
         .then(data => loadCourses(data));
+    }
 }
 function loadCourses(courses) {
+    coursesLayout.innerHTML = '';
     courses.forEach(course => {
         coursesLayout.innerHTML +=
             `<div class="course-card"><p>${course.id} - ${course.name}</p></div>`;
     })
+}
+
+//setup before functions
+var typingTimer;                //timer identifier
+var doneTypingInterval = 800;  //time in ms, 1 second for example
+var search = document.getElementById("search");
+
+//on keyup, start the countdown
+search.onkeyup = function () {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+};
+
+//on keydown, clear the countdown 
+search.onkeydown = function () {
+    clearTimeout(typingTimer);
+};
+
+//user is "finished typing," do something
+function doneTyping() {
+    fetchCourses(search.value);
+
 }
