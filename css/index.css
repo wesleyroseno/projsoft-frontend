@@ -139,6 +139,17 @@ li {
     /* Could be more or less, depending on screen size */
 }
 
+.modal-content2 {
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+    min-height: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
 /* The Close Button */
 
 .close {
@@ -232,4 +243,11 @@ h1 {
 #logged {
     font-size: 15px;
     padding-right: 15px;
+}
+
+#likes-container {
+    min-height: 100px;
+    border: 1px solid #f1f1f1;
+    margin-top: 5px;
+    padding: 10px;
 }
