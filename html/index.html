@@ -52,15 +52,37 @@
     </div>
 
     <div id="createUserModal" class="modal">
-            <div class="modal-content">
-                <span id="createUserModalClose" class="close">&times;</span>
-                <div>
-                    <h1>Cadastrar-se</h1>
-                    <p>form de cadastrar usuário</p>
-                </div>
-    
+        <div class="modal-content">
+            <span id="createUserModalClose" class="close">&times;</span>
+            <div>
+                <form action="javascript:void(0);" style="border:1px solid #ccc">
+                    <div class="container">
+                        <h1>Cadastrar-se</h1>
+                        <hr>
+                        <label for="email"><b>Email</b></label>
+                        <input type="text" placeholder="Email" name="email" required>
+
+                        <label for="firstName"><b>Primeiro Nome</b></label>
+                        <input type="text" placeholder="Primeiro nome" name="firstName" required>
+
+                        <label for="lastName"><b>Sobrenome</b></label>
+                        <input type="text" placeholder="Sobrenome" name="lastName" required>
+
+                        <label for="psw"><b>Senha</b></label>
+                        <input type="password" placeholder="Senha" name="psw" required>
+
+                        <label for="psw-repeat"><b>Repita a senha</b></label>
+                        <input type="password" placeholder="Repita a senha" name="psw-repeat" required>
+
+
+                        <button type="submit" class="signupbtn">Cadastrar-se</button>
+
+                    </div>
+                </form>
             </div>
+
         </div>
+    </div>
     <script type="module" src="../javascript/view/index.js"></script>
 </body>
 
