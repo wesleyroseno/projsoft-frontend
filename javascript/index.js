@@ -112,6 +112,15 @@ function login() {
     });
 }
 
+logoutButton.onclick = function () {
+    loginModalBtn.style.display = "block";
+    createUserModalBtn.style.display = "block";
+
+    logoutButton.style.display = "none";
+    logged.style.display = "none";
+    logged.innerHTML = ``; 
+    localStorage.removeItem('token');
+}
 
 async function sendLogin(user) {
     try {
@@ -151,3 +160,45 @@ async function sendLogin(user) {
 }
 
 document.getElementById("loginButton").addEventListener("click", login, false);
+
+function sendCreateUserRequest() {
+    createUser({
+        email: document.getElementById("email").value,
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        password: document.getElementById("password").value
+    });
+}
+
+async function createUser(user) {
+    try {
+        let response = await fetch(baseurl + "/v1/users/", {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers:{
+                'Access-Control-Allow-Origin':'*',
+                'Content-Type':'application/json;charset=utf-8'
+            }
+        });
+
+        let json = await response.json();
+
+        if (response.status == 201) {
+
+            loginModal.style.display = "block";
+            createUserModal.style.display = "none";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("firstName").value = "";
+            document.getElementById("lastName").value = "";
+        }
+        else {
+            alert(json.message);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+document.getElementById("createUserButton").addEventListener("click", sendCreateUserRequest, false);
