@@ -1,21 +1,48 @@
-g<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="../javascript/courses.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <title>UCDB</title>
 </head>
+
 <body>
-    <h1>TESTANDO GITHUB PAGES</h1>
-    <table id="disciplinas"></table>
-    <h2>TESTANDO LOGIN</h2>
-    <input type="email" placeholder="Email" id="login_email">
 
-            <input type="password" placeholder="Senha" id="login_password">
-            
-            <button type="button" id="login_button">Entrar</button>
+    <div class="wrapper">
+        <header>
+            <div>LOGO</div>
+            <div><button id="myBtn">Login</button></div>
+            <div>Cadastrar-se</div>
+        </header>
+        <article>
+            <h1>Welcome</h1>
+            <p>Hi!</p>
+        </article>
+        <nav>
+            <ul>
+                <li>Sobre</li>
+                <li>Disciplina</li>
+                <li>Ranking</li>
+            </ul>
+        </nav>
+        <footer>Desenvolvido por Wener Wagner e Wesley Roseno. Projeto da Disciplina Projeto de Software 2019.1 - UFCG.
+        </footer>
+    </div>
 
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+    </div>
+    <script type="module" src="../javascript/view/index.js"></script>
 </body>
+
 </html>
