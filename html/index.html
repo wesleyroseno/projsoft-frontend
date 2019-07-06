@@ -16,6 +16,8 @@
             <div class="logo">UCDb</div>
             <div id="createUserModalButton">Cadastrar-se</div>
             <div id="loginModalButton">Login</div>
+            <div id="logged" class="start-hidden"></div>
+            <div id="logoutButton" class="start-hidden">Deslogar</div>
         </header>
         <article>
             <div id="about" class="container page">
@@ -56,12 +58,12 @@
                             <h1>Login</h1>
                             <hr>
                             <label for="emailLogin"><b>Email</b></label>
-                            <input type="text" placeholder="Email" name="emailLogin" required>
+                            <input type="email" placeholder="Email" name="emailLogin" id="loginEmail" required>
 
                             <label for="pswLogin"><b>Senha</b></label>
-                            <input type="password" placeholder="Senha" name="pswLogin" required>
+                            <input type="password" placeholder="Senha" name="pswLogin" id="loginPassword" required>
 
-                            <button type="submit" class="loginbtn">Login</button>
+                            <button type="submit" id="loginButton">Login</button>
     
                         </div>
                     </form>
@@ -79,7 +81,7 @@
                         <h1>Cadastrar-se</h1>
                         <hr>
                         <label for="email"><b>Email</b></label>
-                        <input type="text" placeholder="Email" name="email" required>
+                        <input type="email" placeholder="Email" name="email" required>
 
                         <label for="firstName"><b>Primeiro Nome</b></label>
                         <input type="text" placeholder="Primeiro nome" name="firstName" required>
@@ -94,7 +96,7 @@
                         <input type="password" placeholder="Repita a senha" name="psw-repeat" required>
 
 
-                        <button type="submit" class="signupbtn">Cadastrar-se</button>
+                        <button type="submit">Cadastrar-se</button>
 
                     </div>
                 </form>

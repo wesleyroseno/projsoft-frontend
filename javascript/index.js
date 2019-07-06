@@ -3,6 +3,8 @@ var baseurl = "https://ucdb-rest.herokuapp.com/api"
 var loginModal = document.getElementById("loginModal");
 var loginModalBtn = document.getElementById("loginModalButton");
 var loginModalClose = document.getElementById("loginModalClose");
+var logged = document.getElementById("logged");
+var logoutButton = document.getElementById("logoutButton");
 
 loginModalBtn.onclick = function () {
     loginModal.style.display = "block";
@@ -64,13 +66,13 @@ var coursesLayout = document.getElementById("coursesLayout")
 
 async function fetchCourses(query) {
     if (query) {
-        await fetch(baseurl + "/v1/courses/?query="+query)
+        await fetch(baseurl + "/v1/courses/?query=" + query)
             .then(response => response.json())
             .then(data => loadCourses(data));
     } else {
         await fetch(baseurl + "/v1/courses/")
-        .then(response => response.json())
-        .then(data => loadCourses(data));
+            .then(response => response.json())
+            .then(data => loadCourses(data));
     }
 }
 function loadCourses(courses) {
@@ -102,3 +104,50 @@ function doneTyping() {
     fetchCourses(search.value);
 
 }
+
+function login() {
+    sendLogin({
+        email: document.getElementById("loginEmail").value,
+        password: document.getElementById("loginPassword").value
+    });
+}
+
+
+async function sendLogin(user) {
+    try {
+        let response = await fetch(baseurl + "/v1/auth/login", {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers:{
+                'Access-Control-Allow-Origin':'*',
+                'Content-Type':'application/json;charset=utf-8'
+            }
+        });
+
+        let json = await response.json();
+
+        if (response.status == 200) {
+            localStorage.setItem('token', json.token);
+
+            loginModal.style.display = "none";
+            document.getElementById("loginEmail").value = "";
+            document.getElementById("loginPassword").value = "";
+
+            loginModalBtn.style.display = "none";
+            createUserModalBtn.style.display = "none";
+
+            logoutButton.style.display = "block";
+            logged.style.display = "block";
+            logged.innerHTML = `${user.email}                 `;
+        }
+        else {
+            localStorage.removeItem('token');
+            alert(json.message);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+document.getElementById("loginButton").addEventListener("click", login, false);
