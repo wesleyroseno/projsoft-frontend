@@ -18,14 +18,18 @@
             <div id="loginModalButton">Login</div>
         </header>
         <article>
-            <div id="about" class="page">
-                <h1>SOBRE</h1>
+            <div id="about" class="container page">
+                <h1>Sobre</h1>
+                <hr>
+                <p>O UFCG Cursos database é uma aplicação para classificação e reviews de disciplinas de cursos da UFCG. Por enquanto, a versão 1 do sistema será alimentada apenas com disciplinas do curso de Ciência da Computação. Os usuários dessa aplicação irão construir conteúdo sobre as disciplinas de forma colaborativa através de comentários e likes nas disciplinas. O sistema deve usar essa informação construída para rankear as disciplinas do curso. </p>
             </div>
-            <div id="courses" class="page">
-                <h1>DISCIPLINAS</h1>
+            <div id="courses" class="container page">
+                <h1>Disciplinas</h1>
+                <hr>
             </div>
-            <div id="ranking" class="page">
-                <h1>RANKING</h1>
+            <div id="ranking" class="container page">
+                <h1>Ranking</h1>
+                <hr>
             </div>
         </article>
         <nav>
@@ -44,9 +48,21 @@
         <div class="modal-content">
             <span id="loginModalClose" class="close">&times;</span>
             <div>
-                <h1>Login</h1>
-                <p>Form de fazer login</p>
-            </div>
+                    <form action="javascript:void(0);">
+                        <div class="container">
+                            <h1>Login</h1>
+                            <hr>
+                            <label for="email"><b>Email</b></label>
+                            <input type="text" placeholder="Email" name="email" required>
+
+                            <label for="psw"><b>Senha</b></label>
+                            <input type="password" placeholder="Senha" name="psw" required>
+
+                            <button type="submit" class="signupbtn">Login</button>
+    
+                        </div>
+                    </form>
+                </div>
 
         </div>
     </div>
@@ -55,7 +71,7 @@
         <div class="modal-content">
             <span id="createUserModalClose" class="close">&times;</span>
             <div>
-                <form action="javascript:void(0);" style="border:1px solid #ccc">
+                <form action="javascript:void(0);">
                     <div class="container">
                         <h1>Cadastrar-se</h1>
                         <hr>
