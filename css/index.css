@@ -195,12 +195,30 @@ button:hover {
 }
 
 /* Add padding to container elements */
+
 .container {
     padding: 16px;
     border: none;
-  }
+}
 
-  h1 {
-      color: black;
-      font-size: 20px;
-  }
+h1 {
+    color: black;
+    font-size: 20px;
+}
+
+#coursesLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 5px;
+}
+
+.course-card {
+    color: white;
+    display: grid;
+    background-color: #485780;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    justify-items: center;
+}

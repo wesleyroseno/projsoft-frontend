@@ -1,3 +1,5 @@
+var baseurl = "https://ucdb-rest.herokuapp.com/api"
+
 var loginModal = document.getElementById("loginModal");
 var loginModalBtn = document.getElementById("loginModalButton");
 var loginModalClose = document.getElementById("loginModalClose");
@@ -40,6 +42,7 @@ coursesButton.onclick = function () {
     aboutPage.style.display = "none";
     coursesPage.style.display = "block";
     rankingPage.style.display = "none";
+    fetchCourses()
 }
 
 rankingButton.onclick = function () {
@@ -55,4 +58,18 @@ window.onclick = function (event) {
     if (event.target == createUserModal) {
         createUserModal.style.display = "none";
     }
-} 
+}
+
+var coursesLayout = document.getElementById("coursesLayout")
+
+async function fetchCourses() {
+    await fetch(baseurl + "/v1/courses/")
+        .then(response => response.json())
+        .then(data => loadCourses(data));
+}
+function loadCourses(courses) {
+    courses.forEach(course => {
+        coursesLayout.innerHTML +=
+            `<div class="course-card"><p>${course.id} - ${course.name}</p></div>`;
+    })
+}

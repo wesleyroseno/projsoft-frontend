@@ -26,6 +26,9 @@
             <div id="courses" class="container page">
                 <h1>Disciplinas</h1>
                 <hr>
+                <input type="text" placeholder="Pesquisar" name="search" required>
+                <div id="coursesLayout">
+                </div>
             </div>
             <div id="ranking" class="container page">
                 <h1>Ranking</h1>
@@ -52,13 +55,13 @@
                         <div class="container">
                             <h1>Login</h1>
                             <hr>
-                            <label for="email"><b>Email</b></label>
-                            <input type="text" placeholder="Email" name="email" required>
+                            <label for="emailLogin"><b>Email</b></label>
+                            <input type="text" placeholder="Email" name="emailLogin" required>
 
-                            <label for="psw"><b>Senha</b></label>
-                            <input type="password" placeholder="Senha" name="psw" required>
+                            <label for="pswLogin"><b>Senha</b></label>
+                            <input type="password" placeholder="Senha" name="pswLogin" required>
 
-                            <button type="submit" class="signupbtn">Login</button>
+                            <button type="submit" class="loginbtn">Login</button>
     
                         </div>
                     </form>
@@ -99,7 +102,7 @@
 
         </div>
     </div>
-    <script type="module" src="../javascript/view/index.js"></script>
+    <script type="module" src="../javascript/index.js"></script>
 </body>
 
 </html>
