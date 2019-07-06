@@ -14,18 +14,25 @@
     <div class="wrapper">
         <header>
             <div class="logo">UCDb</div>
-            <div>Cadastrar-se</div>
-            <div><button id="myBtn">Login</button></div>
+            <div id="createUserModalButton">Cadastrar-se</div>
+            <div id="loginModalButton">Login</div>
         </header>
         <article>
-            <h1>Welcome</h1>
-            <p>Hi!</p>
+            <div id="about" class="page">
+                <h1>SOBRE</h1>
+            </div>
+            <div id="courses" class="page">
+                <h1>DISCIPLINAS</h1>
+            </div>
+            <div id="ranking" class="page">
+                <h1>RANKING</h1>
+            </div>
         </article>
         <nav>
             <ul class="menu">
-                <li>Sobre</li>
-                <li>Disciplina</li>
-                <li>Ranking</li>
+                <li id="aboutButton">Sobre</li>
+                <li id="coursesButton">Disciplinas</li>
+                <li id="rankingButton">Ranking</li>
             </ul>
         </nav>
         <footer>Desenvolvido por Wener Wagner e Wesley Roseno. Projeto da Disciplina Projeto de Software 2019.1 - UFCG.
@@ -33,15 +40,27 @@
     </div>
 
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
+    <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
+            <span id="loginModalClose" class="close">&times;</span>
+            <div>
+                <h1>Login</h1>
+                <p>Form de fazer login</p>
+            </div>
+
         </div>
     </div>
+
+    <div id="createUserModal" class="modal">
+            <div class="modal-content">
+                <span id="createUserModalClose" class="close">&times;</span>
+                <div>
+                    <h1>Cadastrar-se</h1>
+                    <p>form de cadastrar usuário</p>
+                </div>
+    
+            </div>
+        </div>
     <script type="module" src="../javascript/view/index.js"></script>
 </body>
 
