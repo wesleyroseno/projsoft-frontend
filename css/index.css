@@ -212,6 +212,18 @@ button:hover {
     border: none;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+}
+
 h1 {
     color: black;
     font-size: 20px;
@@ -224,6 +236,7 @@ h1 {
 }
 
 .course-card {
+    cursor: pointer;
     color: white;
     display: grid;
     background-color: #485780;
@@ -250,4 +263,28 @@ h1 {
     border: 1px solid #f1f1f1;
     margin-top: 5px;
     padding: 10px;
+}
+
+.commentContainer {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 11fr 1fr;
+}
+
+#commentButton {
+    height: auto;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.cardComment {
+    padding: 10px;
+}
+
+.cardMessage {
+    padding-top: 5px;
 }

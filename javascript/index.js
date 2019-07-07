@@ -1,4 +1,5 @@
 var baseurl = "https://ucdb-rest.herokuapp.com/api"
+//var baseurl = "http://localhost:8080/api"
 
 var loginModal = document.getElementById("loginModal");
 var loginModalBtn = document.getElementById("loginModalButton");
@@ -260,11 +261,28 @@ function userLikes(courseProfile) {
     }
 }
 
+function contains(comments, comment) {
+    for (let i = 0; i < comments.length; i++) {
+        if (comments[i].id === comment.id) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function mountProfile(courseProfile) {
     var likesCount = courseProfile.likes.length;
     var likeMsg = "Dar like";
     if (userLikes(courseProfile)) {
         likeMsg = "Retirar like";
+    }
+
+    var commentsFiltered = [];
+    for (let i = courseProfile.comments.length-1; i > 0; i--) {
+        const c = courseProfile.comments[i];
+        if (!contains(commentsFiltered, c)) {
+            commentsFiltered.push(c);
+        }
     }
 
     var likesStr = "";
@@ -282,7 +300,19 @@ function mountProfile(courseProfile) {
     <button id="likeButton">${likeMsg}</button>
     <hr>
     <label for="comments"><b>Comentários</b></label>
-    <input type="text" placeholder="Comente algo sobre a disciplina" name="comments" id="comments">`;
+    <form action="javascript:void(0);">
+    <div class="commentContainer">
+    <input type="text" placeholder="Comente algo sobre a disciplina" name="comments" id="comments" required>
+    <button id="commentButton">Comentar</button>
+    </div>
+    </form>`;
+    for (let i = 0; i < commentsFiltered.length; i++) {
+        const element = commentsFiltered[i];
+        containerCourseModal.innerHTML += `<div class="commentContainer cardComment">
+                                                <div><p><strong>${element.from.firstName} ${element.from.lastName} (${element.from.email})</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.content}</p></div>
+                                                <div>X</div>
+                                                </div>`;
+    }
 }
 
 function createCourseModal(courseProfile) {
@@ -290,6 +320,33 @@ function createCourseModal(courseProfile) {
 
     var likeButton = document.getElementById("likeButton");
     likeButton.addEventListener('click', _ => sendLike(courseProfile), false);
+    var commentButton = document.getElementById("commentButton");
+    commentButton.addEventListener('click', _ => sendComment(courseProfile), false);
+}
+
+async function sendComment(courseProfile) {
+    try {
+        var comments = document.getElementById("comments");
+        var response2 = await fetch(baseurl + "/v1/courses/private/" + courseProfile.id + "/comment", {
+            method: 'POST',
+            body: comments.value,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem("token")
+            }
+        });
+
+        var json2 = await response2.json();
+
+        if (response2.status == 200) {
+            createCourseModal(json2);
+        }
+        else {
+            alert(json2.message);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
 }
 
 async function sendLike(courseProfile) {
