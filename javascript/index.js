@@ -255,7 +255,7 @@ async function openCourseModal() {
 function userLikes(courseProfile) {
     for (let i = 0; i < courseProfile.likes.length; i++) {
         const element = courseProfile.likes[i];
-        if ( element.email === localStorage.getItem("userEmail")) {
+        if (element.email === localStorage.getItem("userEmail")) {
             return true;
         }
     }
@@ -278,7 +278,7 @@ function mountProfile(courseProfile) {
     }
 
     var commentsFiltered = [];
-    for (let i = courseProfile.comments.length-1; i > 0; i--) {
+    for (let i = courseProfile.comments.length - 1; i > 0; i--) {
         const c = courseProfile.comments[i];
         if (!contains(commentsFiltered, c)) {
             commentsFiltered.push(c);
@@ -309,8 +309,10 @@ function mountProfile(courseProfile) {
     for (let i = 0; i < commentsFiltered.length; i++) {
         const element = commentsFiltered[i];
         containerCourseModal.innerHTML += `<div class="commentContainer cardComment">
-                                                <div><p><strong>${element.from.firstName} ${element.from.lastName} (${element.from.email})</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.content}</p></div>
-                                                <div>X</div>
+                                                <div><p><strong>${element.from.email === localStorage.getItem("userEmail") ? "<em>" + element.from.firstName + " " + element.from.lastName + "(" + element.from.email + ")</em>" :
+                                                element.from.firstName + " " + element.from.lastName + "(" + element.from.email + ")"
+                                            }</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.content}</p></div>
+                                                <div>${element.from.email === localStorage.getItem("userEmail") ? '<button id="deleteButton">Deletar</button>' : ""}</div>
                                                 </div>`;
     }
 }

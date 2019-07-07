@@ -277,14 +277,27 @@ h1 {
     margin: 5px 0 22px 0;
 }
 
+#deleteButton {
+    height: auto;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    background-color:red;
+}
+
 strong {
     font-weight: bold;
 }
 
 .cardComment {
     padding: 10px;
+    min-height: 70px;
+    border: 1px solid #f1f1f1;
 }
 
 .cardMessage {
     padding-top: 5px;
+}
+
+em {
+    color: blue;
 }
