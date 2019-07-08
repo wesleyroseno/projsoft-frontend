@@ -58,9 +58,40 @@ coursesButton.onclick = function () {
 }
 
 rankingButton.onclick = function () {
+    if (!localStorage.getItem("token")) {
+        alert("Faça login para poder acessar o Ranking.");
+        return;
+    }
     aboutPage.style.display = "none";
     coursesPage.style.display = "none";
     rankingPage.style.display = "block";
+    updateRanking();
+}
+
+async function updateRanking() {
+    var rankingContainer = document.getElementById("ranking-container");
+
+    await fetch(baseurl + "/v1/courses/private/all", {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("token")
+        }
+    })
+            .then(response => response.json())
+            .then(data => loadRanking(data));
+}
+
+function loadRanking(courses) {
+    courses.sort((a, b) => a.likes.length < b.likes.length ? 1 : -1);
+
+    var rankingContainer = document.getElementById("ranking-container");
+    rankingContainer.innerHTML = ``;
+    rankingContainer.innerHTML += `<div class="ranking-row"><strong>POSIÇÃO</strong></div><div class="ranking-row"><strong>NÚMERO DE LIKES</strong></div><div class="ranking-row"><strong>ID - NOME DA DISCIPLINA</strong></div>`;
+    for (let i = 0; i < courses.length; i++) {
+        const course = courses[i];
+        console.log(course);
+        rankingContainer.innerHTML += `<div class="ranking-row">${i+1}</div><div class="ranking-row">${course.likes.length}</div><div class="ranking-row">${course.id + " - " + course.name}</div>`;
+    }
 }
 
 window.onclick = function (event) {
@@ -141,6 +172,8 @@ logoutButton.onclick = function () {
     logged.innerHTML = ``;
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
+
+    rankingPage.style.display = "none";
 }
 
 async function sendLogin(user) {
@@ -227,6 +260,11 @@ async function createUser(user) {
 document.getElementById("createUserButton").addEventListener("click", sendCreateUserRequest, false);
 
 async function openCourseModal() {
+    if (!localStorage.getItem("token")) {
+        alert("Faça login para poder acessar o perfil de uma disciplina.");
+        return;
+    }
+
     var courseId = this.id.split("-")[2];
 
     try {
@@ -271,6 +309,9 @@ function contains(comments, comment) {
 }
 
 function mountProfile(courseProfile) {
+
+    courseProfile.comments.sort((a, b) => (new Date(a.created) > new Date(b.created)) ? 1 : -1);
+
     var likesCount = courseProfile.likes.length;
     var likeMsg = "Dar like";
     if (userLikes(courseProfile)) {
@@ -309,10 +350,10 @@ function mountProfile(courseProfile) {
     for (let i = 0; i < commentsFiltered.length; i++) {
         const element = commentsFiltered[i];
         containerCourseModal.innerHTML += `<div class="commentContainer cardComment">
-                                                <div><p><strong>${element.from.email === localStorage.getItem("userEmail") ? "<em>" + element.from.firstName + " " + element.from.lastName + "(" + element.from.email + ")</em>" :
-                                                element.from.firstName + " " + element.from.lastName + "(" + element.from.email + ")"
-                                            }</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.content}</p></div>
-                                                <div>${element.from.email === localStorage.getItem("userEmail") ? '<button id="deleteButton">Deletar</button>' : ""}</div>
+                                                <div><p><strong>${element.from.email === localStorage.getItem("userEmail") ? "<em>" + element.from.firstName + " " + element.from.lastName + " (" + element.from.email + ")</em>" :
+                element.from.firstName + " " + element.from.lastName + "(" + element.from.email + ")"
+            }</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.deleted? '<div class="deletedMessage">Mensagem apagada!</div>': element.content}</p></div>
+                                                <div>${element.from.email === localStorage.getItem("userEmail") && !element.deleted? '<button class="deleteButton" id="deleteButton-' + element.id + '">Deletar</button>' : ""}</div>
                                                 </div>`;
     }
 }
@@ -324,6 +365,41 @@ function createCourseModal(courseProfile) {
     likeButton.addEventListener('click', _ => sendLike(courseProfile), false);
     var commentButton = document.getElementById("commentButton");
     commentButton.addEventListener('click', _ => sendComment(courseProfile), false);
+
+    var deleteButtons = document.getElementsByClassName("deleteButton");
+
+    for (let index = 0; index < deleteButtons.length; index++) {
+        var element = deleteButtons[index];
+        element.addEventListener('click', _ => {
+            sendDeleteComment(courseProfile.id, element.id)
+            }, false);
+    }
+}
+
+async function sendDeleteComment(courseId, id) {
+    try {
+        var commentId = id.split("-")[1];
+
+        console.log(commentId);
+        var response2 = await fetch(baseurl + "/v1/courses/private/" + courseId + "/comment/" + commentId, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem("token")
+            }
+        });
+
+        var json2 = await response2.json();
+
+        if (response2.status == 200) {
+            createCourseModal(json2);
+        }
+        else {
+            alert(json2.message);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
 }
 
 async function sendComment(courseProfile) {
@@ -373,3 +449,22 @@ async function sendLike(courseProfile) {
         console.log(e);
     }
 }
+
+function checkLoggedUser() {
+    if (localStorage.getItem("userEmail")) {
+        loginModalBtn.style.display = "none";
+        createUserModalBtn.style.display = "none";
+
+        logoutButton.style.display = "block";
+        logged.style.display = "block";
+        logged.innerHTML = localStorage.getItem("userEmail");
+    } else {
+        loginModalBtn.style.display = "block";
+        createUserModalBtn.style.display = "block";
+
+        logoutButton.style.display = "none";
+        logged.style.display = "none";
+    }
+}
+
+checkLoggedUser();

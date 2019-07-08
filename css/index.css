@@ -277,7 +277,7 @@ h1 {
     margin: 5px 0 22px 0;
 }
 
-#deleteButton {
+.deleteButton {
     height: auto;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -289,6 +289,7 @@ strong {
 }
 
 .cardComment {
+    margin: 5px;
     padding: 10px;
     min-height: 70px;
     border: 1px solid #f1f1f1;
@@ -300,4 +301,21 @@ strong {
 
 em {
     color: blue;
+}
+
+.deletedMessage {
+    font-style: italic;
+    color: grey;
+    padding-top: 10px;
+}
+
+.ranking-row {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #f1f1f1;
+}
+
+#ranking-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 8fr;
 }
