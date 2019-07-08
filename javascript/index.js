@@ -1,5 +1,5 @@
-var baseurl = "https://ucdb-rest.herokuapp.com/api"
-//var baseurl = "http://localhost:8080/api"
+var baseurl = "https://ucdb-rest.herokuapp.com/api";
+//var baseurl = "http://localhost:8080/api";
 
 var loginModal = document.getElementById("loginModal");
 var loginModalBtn = document.getElementById("loginModalButton");
@@ -89,7 +89,6 @@ function loadRanking(courses) {
     rankingContainer.innerHTML += `<div class="ranking-row"><strong>POSIÇÃO</strong></div><div class="ranking-row"><strong>NÚMERO DE LIKES</strong></div><div class="ranking-row"><strong>ID - NOME DA DISCIPLINA</strong></div>`;
     for (let i = 0; i < courses.length; i++) {
         const course = courses[i];
-        console.log(course);
         rankingContainer.innerHTML += `<div class="ranking-row">${i+1}</div><div class="ranking-row">${course.likes.length}</div><div class="ranking-row">${course.id + " - " + course.name}</div>`;
     }
 }
@@ -319,7 +318,7 @@ function mountProfile(courseProfile) {
     }
 
     var commentsFiltered = [];
-    for (let i = courseProfile.comments.length - 1; i > 0; i--) {
+    for (let i = courseProfile.comments.length - 1; i >= 0; i--) {
         const c = courseProfile.comments[i];
         if (!contains(commentsFiltered, c)) {
             commentsFiltered.push(c);
@@ -352,8 +351,8 @@ function mountProfile(courseProfile) {
         containerCourseModal.innerHTML += `<div class="commentContainer cardComment">
                                                 <div><p><strong>${element.from.email === localStorage.getItem("userEmail") ? "<em>" + element.from.firstName + " " + element.from.lastName + " (" + element.from.email + ")</em>" :
                 element.from.firstName + " " + element.from.lastName + "(" + element.from.email + ")"
-            }</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.deleted? '<div class="deletedMessage">Mensagem apagada!</div>': element.content}</p></div>
-                                                <div>${element.from.email === localStorage.getItem("userEmail") && !element.deleted? '<button class="deleteButton" id="deleteButton-' + element.id + '">Deletar</button>' : ""}</div>
+            }</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.deleted ?  '<div class="deletedMessage">Mensagem apagada!</div>': element.content}</p></div>
+                                                <div>${element.from.email === localStorage.getItem("userEmail") && !element.deleted? '<button class="deleteButton" id="deleteButton-' + courseProfile.id + '-' + element.id + '">Deletar</button>' : ""}</div>
                                                 </div>`;
     }
 }
@@ -370,17 +369,16 @@ function createCourseModal(courseProfile) {
 
     for (let index = 0; index < deleteButtons.length; index++) {
         var element = deleteButtons[index];
-        element.addEventListener('click', _ => {
-            sendDeleteComment(courseProfile.id, element.id)
-            }, false);
+        element.addEventListener('click', sendDeleteComment, false);
     }
 }
 
-async function sendDeleteComment(courseId, id) {
+async function sendDeleteComment() {
     try {
-        var commentId = id.split("-")[1];
 
-        console.log(commentId);
+        var courseId = this.id.split("-")[1];
+        var commentId = this.id.split("-")[2];
+
         var response2 = await fetch(baseurl + "/v1/courses/private/" + courseId + "/comment/" + commentId, {
             method: 'DELETE',
             headers: {
