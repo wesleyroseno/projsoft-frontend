@@ -350,7 +350,7 @@ function mountProfile(courseProfile) {
         const element = commentsFiltered[i];
         containerCourseModal.innerHTML += `<div class="commentContainer cardComment">
                                                 <div><p><strong>${element.from.email === localStorage.getItem("userEmail") ? "<em>" + element.from.firstName + " " + element.from.lastName + " (" + element.from.email + ")</em>" :
-                element.from.firstName + " " + element.from.lastName + "(" + element.from.email + ")"
+                element.from.firstName + " " + element.from.lastName + " (" + element.from.email + ")"
             }</strong> - ${new Date(element.created).toLocaleString()}</p><p class="cardMessage">${element.deleted ?  '<div class="deletedMessage">Mensagem apagada!</div>': element.content}</p></div>
                                                 <div>${element.from.email === localStorage.getItem("userEmail") && !element.deleted? '<button class="deleteButton" id="deleteButton-' + courseProfile.id + '-' + element.id + '">Deletar</button>' : ""}</div>
                                                 </div>`;
